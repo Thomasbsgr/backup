@@ -36,25 +36,39 @@ alias sass="npm run sass"
 
 # Encryptage
 enc() {
-  echo -n "Nom du fichier à chiffrer : "
-  read file
-  if [ ! -f "$file" ]; then
-    echo "Fichier introuvable."
-    return 1
+  if [[ "$1" == "backup" ]]; then
+    if [ ! -f "backup.zip" ]; then
+      echo "Fichier introuvable."
+      return 1
+    fi
+    openssl enc -aes-256-cbc -salt -in "backup.zip" -out "papamaman.enc"
+  else
+    echo -n "Nom du fichier à chiffrer : "
+    read file
+    if [ ! -f "$file" ]; then
+      echo "Fichier introuvable."
+      return 1
+    fi
+    openssl enc -aes-256-cbc -salt -in "$file" -out "$file.enc"
   fi
-  openssl enc -aes-256-cbc -salt -in "$file" -out "$file.enc"
 }
 
 denc() {
-  echo -n "Nom du fichier chiffré (.enc) : "
-  read file
-  if [ ! -f "$file" ]; then
-    echo "Fichier introuvable."
-    return 1
+  if [[ "$1" == "backup" ]]; then
+    if [ ! -f "papamaman.enc" ]; then
+      echo "Fichier introuvable."
+      return 1
+    fi
+    openssl enc -d -aes-256-cbc -in "papamaman.enc" -out "backup.zip"
+  else
+    echo -n "Nom du fichier chiffré (.enc) : "
+    read file
+    if [ ! -f "$file" ]; then
+      echo "Fichier introuvable."
+      return 1
+    fi
+    openssl enc -d -aes-256-cbc -in "$file" -out "$file.zip"
   fi
-  echo -n "Nom du fichier de sortie : "
-  read output
-  openssl enc -d -aes-256-cbc -in "$file" -out "$output"
 }
 
 dock_speed() {
@@ -75,11 +89,17 @@ dock_speed() {
   fi
 }
 
-zedit() {
-  cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
-  echo "✅ Sauvegarde mise à jour"
+backup() {
   cd /Users/thomas/.backup_git
+  cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
+  echo -n "✅ Zsh mis à jour"
+  brew bundle dump --describe --file=/Users/thomas/.backup_git/util/Brewfile --force
+  echo -n "✅ Brew mis à jour"
+  cp /Users/thomas/Library/Application\ Support/espanso/match/base.yml /Users/thomas/.backup_git/util/Espanso
+  echo -n "✅ Espanso mis à jour"
   git add .
   git commit -m "backup"
   git push
+  echo -n "✅ Github mis à jour"
+  echo "✅ Mise à jour terminée avec succes !"
 }
