@@ -1,0 +1,23 @@
+tap "stripe/stripe-cli"
+# Distributed revision control system
+brew "git"
+# Open source relational database management system
+brew "mysql"
+# Object-relational database system
+brew "postgresql@14", restart_service: :changed
+# Python version management
+brew "pyenv"
+# Stripe CLI utility
+brew "stripe/stripe-cli/stripe"
+vscode "github.remotehub"
+vscode "mechatroner.rainbow-csv"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
+vscode "ms-vscode.azure-repos"
+vscode "ms-vscode.cmake-tools"
+vscode "ms-vscode.cpptools"
+vscode "ms-vscode.cpptools-extension-pack"
+vscode "ms-vscode.cpptools-themes"
+vscode "ms-vscode.remote-repositories"
+vscode "ritwickdey.liveserver"

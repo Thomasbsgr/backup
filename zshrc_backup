@@ -36,7 +36,7 @@ alias sass="npm run sass"
 
 # Encryptage
 enc() {
-  if [[ "$1" == "backup" ]]; then
+  if [[ "$1" == "code" ]]; then
     if [ ! -f "backup.zip" ]; then
       echo "Fichier introuvable."
       return 1
@@ -54,7 +54,7 @@ enc() {
 }
 
 denc() {
-  if [[ "$1" == "backup" ]]; then
+  if [[ "$1" == "code" ]]; then
     if [ ! -f "papamaman.enc" ]; then
       echo "Fichier introuvable."
       return 1
@@ -71,6 +71,7 @@ denc() {
   fi
 }
 
+# Modif du dock
 dock_speed() {
   if [[ "$1" == "on" ]]; then
     echo "🔧 Activation du Dock rapide..."
@@ -89,21 +90,29 @@ dock_speed() {
   fi
 }
 
+# Fonction backup fichier important
 backup() {
   cd /Users/thomas/.backup_git
+  [ -d util ] && rm -rf util
+  mkdir util
+
   cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
   echo -n "✅ Zsh mis à jour"
   read 1
+
   brew bundle dump --describe --file=/Users/thomas/.backup_git/util/Brewfile --force
   echo -n "✅ Brew mis à jour"
   read 1
+
   cp /Users/thomas/Library/Application\ Support/espanso/match/base.yml /Users/thomas/.backup_git/util/Espanso
   echo -n "✅ Espanso mis à jour"
   read 1
+
   git add .
   git commit -m "backup"
   git push
   echo -n "✅ Github mis à jour"
   read 1
+
   echo "✅ Mise à jour terminée avec succes !"
 }
