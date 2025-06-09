@@ -1,0 +1,75 @@
+PROMPT='%~$'
+
+# changement d'appel pour pip3 et python3
+alias py="python3.13"
+alias pip="pip3"
+
+# Editeur par défaut vscode
+export EDITOR="code"
+
+# zsh
+alias zshup="source ~/.zshrc"
+
+# cd les plus utiles
+alias doc="cd /Users/thomas/Documents/"
+alias desk="cd /Users/thomas/Desktop"
+
+alias pyc="cd /Users/thomas/Documents/pythonProject/coursPython"
+alias pyp="cd /Users/thomas/Documents/pythonProject"
+
+alias corse="cd /Users/thomas/Documents/web/corse"
+
+# Django
+alias run="py manage.py runserver"
+alias man="py manage.py"
+
+# Venv
+alias venv="source venv/bin/activate"
+alias stop="deactivate"
+
+# Odoo
+alias odoo="cd /Users/thomas/Documents/odoo"
+
+# Sass
+alias sass="npm run sass"
+
+# Encryptage
+enc() {
+  echo -n "Nom du fichier à chiffrer : "
+  read file
+  if [ ! -f "$file" ]; then
+    echo "Fichier introuvable."
+    return 1
+  fi
+  openssl enc -aes-256-cbc -salt -in "$file" -out "$file.enc"
+}
+
+denc() {
+  echo -n "Nom du fichier chiffré (.enc) : "
+  read file
+  if [ ! -f "$file" ]; then
+    echo "Fichier introuvable."
+    return 1
+  fi
+  echo -n "Nom du fichier de sortie : "
+  read output
+  openssl enc -d -aes-256-cbc -in "$file" -out "$output"
+}
+
+dock_speed() {
+  if [[ "$1" == "on" ]]; then
+    echo "🔧 Activation du Dock rapide..."
+    defaults write com.apple.dock autohide-delay -float 0
+    defaults write com.apple.dock autohide-time-modifier -float 0.4
+    killall Dock
+    echo "✅ Dock rapide activé."
+  elif [[ "$1" == "off" ]]; then
+    echo "♻️ Réinitialisation des réglages du Dock..."
+    defaults delete com.apple.dock autohide-delay 2>/dev/null
+    defaults delete com.apple.dock autohide-time-modifier 2>/dev/null
+    killall Dock
+    echo "✅ Réglages du Dock réinitialisés."
+  else
+    echo "❗ Utilisation : dock_speed on | off"
+  fi
+}
