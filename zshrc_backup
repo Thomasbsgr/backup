@@ -13,6 +13,7 @@ alias zshup="source ~/.zshrc"
 # cd les plus utiles
 alias doc="cd /Users/thomas/Documents/"
 alias desk="cd /Users/thomas/Desktop"
+alias user="cd /Users/thomas"
 
 alias pyc="cd /Users/thomas/Documents/pythonProject/coursPython"
 alias pyp="cd /Users/thomas/Documents/pythonProject"
@@ -72,4 +73,13 @@ dock_speed() {
   else
     echo "❗ Utilisation : dock_speed on | off"
   fi
+}
+
+zedit() {
+  cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
+  echo "✅ Sauvegarde mise à jour"
+  cd /Users/thomas/.backup_git
+  git add .
+  git commit -m "backup"
+  git push
 }
