@@ -93,13 +93,17 @@ backup() {
   cd /Users/thomas/.backup_git
   cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
   echo -n "✅ Zsh mis à jour"
+  read 1
   brew bundle dump --describe --file=/Users/thomas/.backup_git/util/Brewfile --force
   echo -n "✅ Brew mis à jour"
+  read 1
   cp /Users/thomas/Library/Application\ Support/espanso/match/base.yml /Users/thomas/.backup_git/util/Espanso
   echo -n "✅ Espanso mis à jour"
+  read 1
   git add .
   git commit -m "backup"
   git push
   echo -n "✅ Github mis à jour"
+  read 1
   echo "✅ Mise à jour terminée avec succes !"
 }
