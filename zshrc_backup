@@ -92,27 +92,33 @@ dock_speed() {
 
 # Fonction backup fichier important
 backup() {
-  cd /Users/thomas/.backup_git
-  [ -d util ] && rm -rf util
-  mkdir util
+  cd /Users/thomas/.backup_git || return
 
-  cp ~/.zshrc /Users/thomas/.backup_git/zshrc_backup
-  echo -n "✅ Zsh mis à jour"
-  read 1
+  # Recrée proprement le dossier util
+  rm -rf util
+  mkdir -p util
 
-  brew bundle dump --describe --file=/Users/thomas/.backup_git/util/Brewfile --force
-  echo -n "✅ Brew mis à jour"
-  read 1
+  # Sauvegarde zshrc
+  cp ~/.zshrc ./zshrc_backup
+  echo "✅ Zsh mis à jour"
+  read -n 1
 
-  cp /Users/thomas/Library/Application\ Support/espanso/match/base.yml /Users/thomas/.backup_git/util/Espanso
-  echo -n "✅ Espanso mis à jour"
-  read 1
+  # Sauvegarde des paquets Homebrew
+  brew bundle dump --describe --file=./util/Brewfile --force
+  echo "✅ Brew mis à jour"
+  read -n 1
 
+  # Sauvegarde Espanso (avec guillemets pour éviter les erreurs d'espace)
+  cp "/Users/thomas/Library/Application Support/espanso/match/base.yml" ./util/Espanso
+  echo "✅ Espanso mis à jour"
+  read -n 1
+
+  # Commit et push Git
   git add .
-  git commit -m "backup"
+  git commit -m "backup" || echo "⚠️ Rien à committer"
   git push
-  echo -n "✅ Github mis à jour"
-  read 1
+  echo "✅ Github mis à jour"
+  read -n 1
 
-  echo "✅ Mise à jour terminée avec succes !"
+  echo "✅ Mise à jour terminée avec succès !"
 }
