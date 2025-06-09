@@ -13,6 +13,7 @@ alias zshup="source ~/.zshrc"
 # cd les plus utiles
 alias doc="cd /Users/thomas/Documents/"
 alias desk="cd /Users/thomas/Desktop"
+alias user="cd /Users/thomas"
 
 alias pyc="cd /Users/thomas/Documents/pythonProject/coursPython"
 alias pyp="cd /Users/thomas/Documents/pythonProject"
