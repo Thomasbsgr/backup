@@ -1,1 +1,1 @@
-openssl enc -d -aes-256-cbc -in papamaman.enc -out "denc.zip"
+openssl enc -d -aes-256-cbc -in "papamaman2.enc" -out "util.zip"
